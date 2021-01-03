@@ -8,10 +8,13 @@ import (
 )
 
 // TelegramDownloader implements the download for telegram files.
-type TelegramDownloader struct{}
+type TelegramDownloader struct{
+	// MaxDownloadSize represents the maximum allowed download size for medias
+	MaxDownloadSize int64
+}
 
 // Download downloads telegram files.
-func (*TelegramDownloader) Download(id, mediaType string, maxSize int64, r *http.Request) (filename string, reader io.ReadCloser, err error) {
+func (*TelegramDownloader) Download(id, mediaType string, r *http.Request) (filename string, reader io.ReadCloser, err error) {
 
 	// Filename
 	workingFileURL := r.Header.Get(downloadURLHeaderName)
@@ -40,4 +43,8 @@ func (*TelegramDownloader) Download(id, mediaType string, maxSize int64, r *http
 	reader = resp.Body
 	return
 
+}
+
+func (d *TelegramDownloader) GetMaxDownloadSize() int64 {
+	return d.MaxDownloadSize
 }

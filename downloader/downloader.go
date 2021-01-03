@@ -12,5 +12,6 @@ const (
 
 // Downloader represents a generic handler for file downloads.
 type Downloader interface {
-	Download(id, mediaType string, maxSize int64, r *http.Request) (filename string, reader io.ReadCloser, err error)
+	Download(id, mediaType string, r *http.Request) (filename string, reader io.ReadCloser, err error)
+	GetMaxDownloadSize() int64
 }
